@@ -1,0 +1,87 @@
+#links
+# https://www.gnu.org/software/screen/manual/screen.html
+# https://gist.github.com/joaopizani/2718397
+
+msgwait 2
+
+# Systemlast und Datum
+#caption always "%{= kc}%H (system load: %l)%-21=%{= .m}%D %d.%m.%Y %0c"
+# Fensternamen, hervorgehobenes aktives Fenster und Zeit, Datum, Load
+#caption always "%?%{wk}%-Lw%?%{yk}%n*%f %t%?(%u)%?%?%{wk}%+Lw%? %{gk}%=%c %{yk}%d/%M/%Y %{wk}Load: %l"
+# [<srvname>][ <fensterliste> ][<datum&last>]
+caption always "%{= kG}[%{G}%H]%{g}[%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}]%{R}[ %{B}%c %{g}%d/%M/%Y %{kr}Load: %l %{R}]"
+
+# schicke xterm Titelzeile (mit Unterstützung von $PROMPT_COMMAND)
+hardstatus string "[%H(screen): %n%? - %t%?]"
+
+# no welcome message
+startup_message off
+
+# huge scrollback buffer
+defscrollback 5000
+
+# 256 colors
+attrcolor b ".I"
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+termcapinfo xterm ti@:te@
+defbce on
+
+# mouse tracking allows to switch region focus by clicking
+mousetrack off
+
+#bind c screen 1 # window numbering starts at 1 not 0
+#bind 0 select 10
+
+# navigating regions with Ctrl-arrows
+#bindkey "^[[1;5D" focus left
+#bindkey "^[[1;5C" focus right
+#bindkey "^[[1;5A" focus up
+#bindkey "^[[1;5B" focus down
+
+# switch windows with F3 (prev) and F4 (next)
+bindkey "^[OR" prev
+bindkey "^[OS" next
+
+# switch layouts with Ctrl+F3 (prev layout) and Ctrl+F4 (next)
+#bindkey "^[O1;5R" layout prev
+#bindkey "^[O1;5S" layout next
+
+# F2 puts Screen into resize mode. Resize regions using hjkl keys.
+#bindkey "^[OQ" eval "command -c rsz" # enter resize mode
+
+# use hjkl keys to resize regions
+#bind -c rsz h eval "resize -h -5" "command -c rsz"
+#bind -c rsz j eval "resize -v -5" "command -c rsz"
+#bind -c rsz k eval "resize -v +5" "command -c rsz"
+#bind -c rsz l eval "resize -h +5" "command -c rsz"
+
+# quickly switch between regions using tab and arrows
+#bind -c rsz \t    eval "focus"       "command -c rsz" # Tab
+#bind -c rsz -k kl eval "focus left"  "command -c rsz" # Left
+#bind -c rsz -k kr eval "focus right" "command -c rsz" # Right
+#bind -c rsz -k ku eval "focus up"    "command -c rsz" # Up
+#bind -c rsz -k kd eval "focus down" "command -c rsz" # Down
+
+# lokaler scrollback ist weniger fummelig
+#termcapinfo xterm|xterms|xs|rxvt ti@:te@
+
+# key bindings for windows beyond 9
+bind -c winlev2 0 select 10
+bind -c winlev2 1 select 11
+bind -c winlev2 2 select 12
+bind -c winlev2 3 select 13
+bind -c winlev2 4 select 14
+bind -c winlev2 5 select 15
+bind -c winlev2 6 select 16
+bind -c winlev2 7 select 17
+bind -c winlev2 8 select 18
+bind -c winlev2 9 select 19
+bindkey "^B" command -c winlev2
+
+activity              "activity in %n (%t) [%w:%s]~"
+bell                  "bell     in %n (%t) [%w:%s]~"
+
+shell   bash
+
+msgwait 2
+
